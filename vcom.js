@@ -8,7 +8,7 @@
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
 
-    const query = params.entries.reduce((param) => `${param}=${params[param]}`).join('&');
+    const query = Object.entries(params).map((entry) => `${entry[0]}=${entry[1]}`).join('&');
 
     return fetch(`${url}?${query}`, {
       headers,
