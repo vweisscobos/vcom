@@ -465,6 +465,8 @@
     
     let setEmptyByDefault = (bool) => {
       emptyByDefault = bool;
+
+      return toReturn;
     };
 
     let queryBuilder = (term) => ({ term });
@@ -637,7 +639,7 @@
     const add = (item) => {
       const index = model.length - 1;
 
-      model.append(item);
+      model.push( item);
 
       const newRow = document.createElement('tr');
       newRow.setAttribute('data-index', index);
