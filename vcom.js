@@ -42,7 +42,7 @@
 
     let responseHandler = (item) => item;
 
-    let onValueChange = (item) => {
+    let onItemFound = (item) => {
       console.log(item);
     };
 
@@ -60,13 +60,7 @@
       list.childNodes[listItem].classList.add('selected');
       valueHolder.value = list.childNodes[listItem].innerText || '';
 
-      onValueChange(
-        [
-          list.childNodes[listItem].value,
-          list.childNodes[listItem].innerText,
-          result[listItem],
-        ],
-      );
+      onItemFound(result[listItem]);
     };
 
     const handleArrowSelection = (evt) => {
@@ -95,7 +89,7 @@
           result = res;
 
           res.map(responseHandler).forEach((item) => {
-            html += `<li value="${item[0]}">${item[1]}</li>`;
+            html += `<li value="${item.value}">${item.label}</li>`;
           });
 
           list.innerHTML = html;
@@ -247,8 +241,8 @@
       return toReturn;
     };
 
-    const setOnValueChange = (cb) => {
-      onValueChange = cb;
+    const setOnItemFound = (cb) => {
+      onItemFound = cb;
 
       return toReturn;
     };
@@ -278,7 +272,7 @@
       setPlaceholder,
       setQueryBuilder,
       setResponseHandler,
-      setOnValueChange,
+      setOnItemFound,
       setInheritAttributes,
       mount,
       getRef,
