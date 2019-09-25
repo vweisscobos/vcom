@@ -457,9 +457,14 @@
     let itemsPerPage = 2;
     let currentPage = 1;
     let selectedElements = [];
+    let emptyByDefault = true;
 
     let actionCallback = () => {
       // console.log('tabela clicada');
+    };
+    
+    let setEmptyByDefault = (bool) => {
+      emptyByDefault = bool;
     };
 
     let queryBuilder = (term) => ({ term });
@@ -533,6 +538,8 @@
       searchBar.classList.add('vcom-searchbar');
       searchBar.setAttribute('placeholder', placeholder);
       searchBar.addEventListener('keyup', (evt) => {
+        if (!emptyByDefault && evt.target.value === '') onSearchChange(evt.target.value);
+        
         if (evt.target.value.length < 3) return;
 
         onSearchChange(evt.target.value);
@@ -794,6 +801,7 @@
       getSelectedItems,
       getModel,
       removeAll,
+      setEmptyByDefault
     };
 
     return toReturn;
