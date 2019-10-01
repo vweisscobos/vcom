@@ -483,14 +483,23 @@
     const row = document.createElement('tr');
     const body = document.createElement('tbody');
 
-    const generateActionButtons = (btns) => btns.reduce((acc, btn) => `${acc}<button data-action="${btn.action}">${btn.innerHTML || ''}</button>`, '');
+    const generateActionButtons = (btns, item) => {
+      return btns.reduce((acc, btn) => {
+        const attrs = btn.attrs ? btn.attrs(item).join(' ') : '';
+        const classes = btn.classes ? btn.classes(item).join(' ') : '';
+
+        console.log(attrs);
+
+        return `${acc}<button class="${classes}" data-action="${btn.action}" ${attrs}>${btn.innerHTML || ''}</button>`;
+      }, '');
+    };
 
     const lineContent = (item, index) => {
       let content = checklist ? `<td><input type="checkbox" value="${index}"/></td>` : '';
 
       content = attributes.reduce((acc, attr) => `${acc}<td>${item[attr]}</td>`, content);
 
-      content += actionButtons.length > 0 ? `<td class="vcom-table__row__action-btns">${generateActionButtons(actionButtons)}</td>` : '';
+      content += actionButtons.length > 0 ? `<td class="vcom-table__row__action-btns">${generateActionButtons(actionButtons, item)}</td>` : '';
 
       return content;
     };
