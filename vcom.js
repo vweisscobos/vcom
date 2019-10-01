@@ -602,10 +602,11 @@
       });
 
       body.addEventListener('click', (evt) => {
+        evt.stopPropagation();
+
         let index = -1;
         let parent = evt.target;
         let action = 'click';
-
 
         while (index < 0) {
           if (parent.tagName === 'TR') index = parent.getAttribute('data-index');
@@ -639,7 +640,7 @@
     const add = (item) => {
       const index = model.length - 1;
 
-      model.push( item);
+      model.push(item);
 
       const newRow = document.createElement('tr');
       newRow.setAttribute('data-index', index);
@@ -701,6 +702,9 @@
       get(source, queryBuilder(term))
         .then((res) => {
           model = res.map(responseHandler);
+          // res.forEach(item => {
+          //   toReturn.add(responseHandler(item));
+          // });
           render();
         });
     };
@@ -772,6 +776,11 @@
       });
     };
 
+    const reset = () => {
+      onSearchChange('');
+      render();
+    };
+
     toReturn = {
       element: table,
       add,
@@ -794,7 +803,8 @@
       getSelectedItems,
       getModel,
       removeAll,
-      setEmptyByDefault
+      setEmptyByDefault,
+      reset
     };
 
     return toReturn;
